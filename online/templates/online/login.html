@@ -1,0 +1,23 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+<div class="container main" style="">
+        <a href="/" style="display: block;margin-bottom: 20px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+      <img class="logo" src="https://i.pinimg.com/736x/6f/5f/fb/6f5ffb9f4b7c16b6fdffc3b3b0148bb9--frog-design-the-frog.jpg">
+
+    {% if form.errors %}
+        <p class="error">Sorry, invalid username or password</p>
+    {% endif %}
+
+    <form action="/auth_view/" method="POST">
+        <label for="username">User name:</label>
+        <input type="text" name="username" value="" id="username">
+        <label for="password">Password:</label>
+        <input type="password" name="password" value="" id="password">
+
+        <input type="submit" value="login" />
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "online/base.html" %}
+
+
+{% block content %}
+
+
+
+<div class="container loggedin" style="">
+    <div class="col-md-6 sidebar">
+        <h2 class="name">Hi {{ user.first_name }} Logged in!</h2>
+        <p class="logout"><a href="/logout/"><i class="fa fa-sign-out" aria-hidden="true"></i></a></p>
+
+        <a class="sendmoney buttons" href="/sendmoney/"><h2>Send Money</h2></a>
+
+
+        {% if newaccount %}
+        <a class="createaccount buttons" href="/create_new_account/"><h2>Create a new account</h2></a>
+        {% endif %}
+
+        <a class="transaction buttons" class="transactions" href="/history/"><h2>Transactions</h2></a>
+
+        {% if noloans %}
+        <a class="takeloan buttons" class="takealon" href="/loan/"><h2>Take a Loan!</h2></a>
+        {% endif %}
+
+
+        <a class="loanhistory buttons" href="/loanhis/"><h2>Loan Account Overview</h2></a>
+</div>
+
+<div class="personaldetails col-md-6">
+    <div class="personaldetails col-md-12">
+        <h3 class="personaltitle">Personal Details:</h3>
+        <h4 class="regcountry pdetails">Registered country: <span>{{ moredetails.country }}</span></h4>
+        <h4 class="regaddress pdetails">Registered address: <span>{{ moredetails.address }}</span></h4>
+    </div>
+    <div class="accountdetails col-md-12">
+        <h3 class="accdetailstitle">Your Account Details:</h3>
+            <select id="currencychanger">
+                <option value="Dollars">Dollars</option>
+                <option value="Euro">Euro</option>
+                <option value="Lira">Lira</option>
+            </select><button id="removeacc"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+        <span class="error">{{ error_message }}</span>
+
+        <h4 class="accnametitle">Account name: <span class="accname">{{ accountdetails.account_name}}</span></h4>
+        <h4 class="accamounttitle">Account balance: <span class="accamount">{{ accountdetails.amount}}</span></h4>
+        <h4 style="display: none;">Account Currency: <span class="acccurr">{{ accountdetails.currency}}</span></h4>
+        <h4 class="accnotitle">Account No: <span class="accno">{{ accountdetails.account_no }}</span></h4>
+        <h4 class="accibantitle">IBAN: <span class="acciban">{{ accountdetails.iban}}</span></h4>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script>
+$(document).ready(function(){
+    initcurr = $('.acccurr').text();
+    console.log(initcurr)
+    var option = $('#currencychanger option[value='+ initcurr +']')
+    option.attr('selected', 'selected');
+
+var iban = "{{ accountdetails.iban }}"
+
+    $("#currencychanger").on('change', function postinput(){
+        var matchvalue = $(this).val(); // this.value
+        console.log(matchvalue)
+        $.ajax({
+             type:"POST",
+             url:"/currchange/",
+             data: {
+                    'matchvalue': matchvalue
+                    },
+             success: function(data){
+                 returned_data = JSON.parse(data)
+
+                 $('.error').text(returned_data.error)
+                 $('.accamount').text(returned_data.amount)
+                 $('.acciban').text(returned_data.iban)
+                 iban = returned_data.iban
+                 $('.accname').text(returned_data.account_name)
+                 $('.accno').text(returned_data.account_no)
+
+                 if (returned_data.restrictsend === true) {
+                     $('.sendmoney').hide()
+                 } else {
+                     $('.sendmoney').show()
+                 }
+
+                 if (returned_data.restrictdelete === true) {
+                     $('#removeacc').hide()
+                 } else {
+                     $('#removeacc').show()
+                 }
+
+
+
+
+             }
+            });
+    });
+
+
+    $("#removeacc").on('click', function postinput(){
+        $.ajax({
+             type:"POST",
+             url:"/removeacc/",
+             data: {
+                    'iban': iban
+                    },
+             success: function(data){
+                 location.reload();
+             }
+            });
+    });
+
+
+    $(".sendmoney").on('click', function postinput(){
+        var sendingaccount = iban
+        $.ajax({
+             type:"POST",
+             url:"/activeacc/",
+             data: {
+                    'sendingaccount': sendingaccount
+                    },
+             success: function(data){
+
+
+             }
+            });
+        $(".transactions").on('click', function postinput(){
+        var sendingaccount = iban
+        $.ajax({
+             type:"POST",
+             url:"/activeacc/",
+             data: {
+                    'sendingaccount': sendingaccount
+                    },
+             success: function(data){
+
+
+             }
+            });
+    });
+
+
+});
+
+    });
+</script>
+
+{% endblock %}

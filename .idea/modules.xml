@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Online Banking.iml" filepath="$PROJECT_DIR$/.idea/Online Banking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ITC BackEnd/REST Service/.idea/REST Service.iml" filepath="$PROJECT_DIR$/../ITC BackEnd/REST Service/.idea/REST Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../heroku-django-template/.idea/assignment.iml" filepath="$PROJECT_DIR$/../heroku-django-template/.idea/assignment.iml" />
+    </modules>
+  </component>
+</project>

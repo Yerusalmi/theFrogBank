@@ -1,0 +1,52 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+
+<div class="container main signup" style="">
+        <a href="/" style="display: block;margin-bottom: 20px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+      <img class="logo" src="https://i.pinimg.com/736x/6f/5f/fb/6f5ffb9f4b7c16b6fdffc3b3b0148bb9--frog-design-the-frog.jpg">
+
+  <h2 class="signuptitle">Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    {% for field2 in form2 %}
+      <p>
+        {{ field2.label_tag }}<br>
+        {{ field2 }}
+
+        {% for error in field2.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    {% for field3 in form3 %}
+      <p>
+        {{ field3.label_tag }}<br>
+        {{ field3 }}
+
+        {% for error in field3.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+
+    <button type="submit">Sign up</button>
+  </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+
+<div class="container main" style="">
+    <a href="/loggedin/" style="display: block;margin-bottom: 20px"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    {% if form %}
+
+<h4 style="display: inline-block;">Loan Duration:  <span> 24 Months</span></h4><br/>
+<h4 style="display: inline-block;">Loan Interest Rate:  <span>0.05%</span></h4>
+
+
+<form method="post" class="loancreation">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+      </p>
+    {% endfor %}
+
+    <h4>Amount to be paid: $<span class="tobepaid">0</span></h4>
+
+    <button type="submit" class="loancreatesubmit"><i class="fa fa-usd" aria-hidden="true"></i></button>
+  </form>
+
+    {% endif %}
+
+
+<br/>
+<br/>
+<br/>
+
+
+
+{% if all_loans %}
+    {% for loan in all_loans %}
+        <div class="col-md-6 transactions" style="margin-bottom: 50px">
+            <h4>Loan Account Name: <span>{{ loan.loan_account }}</span></h4>
+            <h4>Loan Duration: <span>{{ loan.loan_duration }} Months</span></h4>
+            <h4>Loan Interest: <span>{{ loan.loan_interest }} %</span></h4>
+            <h4>Loan Amount:  <span>${{ loan.loan_amount }} </span></h4>
+            <h4>Loan Outstanding Amount:  <span>${{ loan.outstanding_loan }} </span></h4>
+        </div>
+    {% endfor %}
+{% endif %}
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        $("#id_loan_amount").on('keyup', function postinput(){
+            var matchvalue = $(this).val(); // this.value
+            totalValue = matchvalue * ( 1 + 0.05)
+            $('.tobepaid').html(totalValue )
+        })
+    });
+
+
+</script>
+
+
+
+{% endblock %}

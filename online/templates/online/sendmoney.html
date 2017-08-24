@@ -1,0 +1,37 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+
+
+<div class="container main">
+
+<a href="/loggedin/"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+<h1 class="sendmoneytitle">Send Money</h1>
+
+<h3 class="yourbalance">Your Balance: <span>{{ accountdetails.amount }}</span></h3>
+
+
+
+<br/>
+<br/>
+
+<p class="error">{{ error.error }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in send_form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+      </p>
+    {% endfor %}
+
+
+    <button type="submit">Submit</button>
+  </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+
+
+<div class="container main" style="overflow-y: scroll">
+     <div class="col-md-12" style="margin-bottom: 29px">
+        <a href="/loggedin/"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+     </div>
+    {% for acc in all_accs %}
+        <div class="col-md-6 transactions">
+            <h4>ID: <span>{{ acc.id }}</span></h4>
+            <h4>Receiver Name: <span>{{ acc.receiver_name }}</span></h4>
+            <h4>Receiver IBAN: <span>{{ acc.receiver }}</span></h4>
+            <h4>Currency: <span>{{ acc.currency }}</span></h4>
+            <h4>Transaction Date: <span>{{ acc.trans_date }}</span></h4>
+            <h4>The Amount: <span>{{ acc.the_amount }}</span></h4>
+        </div>
+{% endfor %}
+
+</div>
+
+
+
+
+{% endblock %}

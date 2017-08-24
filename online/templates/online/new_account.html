@@ -1,0 +1,70 @@
+{% extends "online/base.html" %}
+
+{% block content %}
+
+<div class="container main">
+
+<a href="/loggedin/"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+<h1 class="createnewaccounttitle">Create a New Account</h1>
+
+<h3 class="yourbalance">Your Balance: <span>{{ accountdetails.amount }}</span></h3>
+
+
+
+<br/>
+<br/>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="account_name">Account Name</label>
+    <input type="text" name="the_amount" required="" id="account_name">
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+      </p>
+    {% endfor %}
+
+
+
+
+    <button type="submit">Submit</button>
+  </form>
+
+    </div>
+
+
+<script>
+    var dollars = '{{existing_accs.Dollars}}'
+    var euro = '{{existing_accs.Euro}}'
+    var lira = '{{existing_accs.Lira}}'
+
+    var exiscurr = {}
+    exiscurr["Dollars"] = dollars
+    exiscurr["Euro"] = euro
+    exiscurr["Lira"] = lira
+
+
+
+    console.log(exiscurr)
+
+    if (exiscurr["Dollars"] == "True") {
+         $('#id_currency > option[value=Dollars]').remove()
+
+    }
+
+    if  (exiscurr["Euro"] == "True") {
+         $('#id_currency > option[value=Euro]').remove()
+
+    }
+
+    if (exiscurr["Lira"] == "True") {
+         $('#id_currency > option[value=Lira]').remove()
+
+    }
+
+
+</script>
+
+{% endblock %}
